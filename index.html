@@ -275,6 +275,10 @@
     transition: opacity 0.4s;
   }
 
+  a.project-card, a.project-card:visited { text-decoration: none; color: var(--text); }
+  a.project-card h3 { color: var(--text); }
+  a.project-card p { color: var(--text-dim); }
+
   .project-card:hover {
     border-color: rgba(0,229,160,0.2);
     transform: translateY(-4px);
@@ -578,7 +582,7 @@
   <h2 class="section-title">Things I've Built</h2>
   <div class="projects-grid">
 
-    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-card fade-in" style="text-decoration:none;color:inherit;">
+    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-card fade-in" style="text-decoration:none;color:var(--text);display:block;">
       <span class="project-status status-live">Live</span>
       <div class="project-icon">🕉</div>
       <h3>GitaFlow</h3>
