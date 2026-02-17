@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gautamdn</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-hover: #1a1a26;
+    --border: #1e1e2e;
+    --text: #e2e2ea;
+    --text-dim: #6b6b80;
+    --accent: #00e5a0;
+    --accent-dim: rgba(0, 229, 160, 0.08);
+    --accent-glow: rgba(0, 229, 160, 0.15);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Sora', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--text-dim); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  nav a:hover { color: var(--accent); }
+  nav a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.4s;
+  }
+
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), #00b8d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 520px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.8s;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(0,229,160,0.08);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .project-card:hover {
+    border-color: rgba(0,229,160,0.2);
+    transform: translateY(-4px);
+    background: var(--surface-hover);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+
+  .project-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    background: rgba(0, 229, 160, 0.06);
+    color: var(--accent);
+    border: 1px solid rgba(0, 229, 160, 0.1);
+  }
+
+  .project-status {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .status-live {
+    background: rgba(0, 229, 160, 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0, 229, 160, 0.2);
+  }
+
+  .status-wip {
+    background: rgba(255, 190, 60, 0.1);
+    color: #ffbe3c;
+    border: 1px solid rgba(255, 190, 60, 0.2);
+  }
+
+  .status-idea {
+    background: rgba(120, 120, 180, 0.1);
+    color: #7878b4;
+    border: 1px solid rgba(120, 120, 180, 0.2);
+  }
+
+  /* ── IDEAS ── */
+  .ideas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .idea-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.5rem 1.8rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+
+  .idea-item:hover {
+    border-color: rgba(0, 229, 160, 0.15);
+    background: var(--surface-hover);
+  }
+
+  .idea-num {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    min-width: 32px;
+    padding-top: 0.1rem;
+  }
+
+  .idea-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .idea-item p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* ── ABOUT ── */
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.9;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stat-card .num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-card .label {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ── CONTACT ── */
+  .links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+
+  .link-card:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .link-card svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .footer-pulse {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,160,0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0,229,160,0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 1rem; }
+    nav a { font-size: 0.7rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-content { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-cta { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">gautamdn<span>_</span></div>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#ideas">Ideas</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">// engineering · building · quizzing</div>
+  <h1>Hey, I'm <span class="highlight">gautamdn</span></h1>
+  <p class="hero-desc">Engineering Manager at Qualtrics. AI hackathon winner. Quiz enthusiast. Dad of 2. I build things, explore ideas, and ship side projects.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Projects &darr;</a>
+    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+  </div>
+</header>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">Things I've Built</h2>
+  <div class="projects-grid">
+
+    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-card fade-in" style="text-decoration:none;color:inherit;">
+      <span class="project-status status-live">Live</span>
+      <div class="project-icon">🕉</div>
+      <h3>GitaFlow</h3>
+      <p>A self-paced Bhagavad Gita study app — 700 shlokas across 239 daily readings with audio chanting, AI-powered Sanskrit pronunciation feedback, and streak tracking.</p>
+      <div class="project-tags">
+        <span class="tag">React Native</span>
+        <span class="tag">Expo</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Whisper API</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- IDEAS -->
+<section id="ideas">
+  <div class="section-label">Ideas & Notes</div>
+  <h2 class="section-title">What I'm Thinking About</h2>
+  <div class="ideas-list">
+    <div class="idea-item fade-in">
+      <span class="idea-num">01</span>
+      <div>
+        <h3>Idea Title Goes Here</h3>
+        <p>A short note on something you're exploring, a question you're thinking about, or a half-baked concept worth sharing.</p>
+      </div>
+    </div>
+    <div class="idea-item fade-in">
+      <span class="idea-num">02</span>
+      <div>
+        <h3>Another Thought</h3>
+        <p>These can be rough — the whole point is to share thinking in progress, not polished essays.</p>
+      </div>
+    </div>
+    <div class="idea-item fade-in">
+      <span class="idea-num">03</span>
+      <div>
+        <h3>Something I'm Researching</h3>
+        <p>A topic, paper, or rabbit hole you're currently going down. Link out to resources if you want.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">A Bit About Me</h2>
+  <div class="about-content">
+    <div class="about-text fade-in">
+      <p>I'm <strong>gautamdn</strong> — an Engineering Manager at <strong>Qualtrics</strong> by day, and a builder of side projects by night. I've won multiple <strong>AI hackathons</strong> and love pushing the boundaries of what's possible with new tech.</p>
+      <p>Outside of code, I'm an avid <strong>quizzing enthusiast</strong> — I've won multiple quizzes and regularly host them too. When I'm not doing any of that, I'm busy being dad to two amazing kids.</p>
+      <p>This site is a living portfolio — a place to collect my work, share rough ideas, and keep building in public.</p>
+    </div>
+    <div class="about-stats fade-in">
+      <div class="stat-card">
+        <span class="num">EM</span>
+        <span class="label">@ Qualtrics</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">🏆</span>
+        <span class="label">AI Hackathon Wins</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">2</span>
+        <span class="label">Kids</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">🧠</span>
+        <span class="label">Quiz Champion</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="links-row">
+    <a href="https://github.com/gautamdn" target="_blank" class="link-card">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+    <a href="#" class="link-card">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="#" class="link-card">
+      <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+      Twitter / X
+    </a>
+    <a href="/cdn-cgi/l/email-protection#51283e24113429303c213d347f323e3c" class="link-card">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 gautamdn</span>
+  <div class="footer-pulse">
+    <div class="pulse-dot"></div>
+    <span>always building</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+  
