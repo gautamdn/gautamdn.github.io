@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>gautamdn</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #fafaf8;
+    --bg: #f4f4f0;
     --surface: #ffffff;
-    --surface-hover: #f5f5f0;
-    --border: #e4e4de;
-    --text: #1a1a1a;
-    --text-dim: #6e6e6e;
-    --accent: #0f6fec;
-    --accent-light: rgba(15, 111, 236, 0.07);
-    --accent-border: rgba(15, 111, 236, 0.2);
-    --mono: 'DM Mono', monospace;
-    --sans: 'DM Sans', sans-serif;
+    --surface-hover: #fafaf7;
+    --border: #d8d8d0;
+    --text: #111111;
+    --text-dim: #555555;
+    --accent: #0a8f5c;
+    --accent-light: rgba(10, 143, 92, 0.06);
+    --accent-border: rgba(10, 143, 92, 0.2);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+    --grid-color: rgba(0, 0, 0, 0.04);
   }
 
   html { scroll-behavior: smooth; }
@@ -30,7 +31,22 @@
     font-family: var(--sans);
     line-height: 1.7;
     overflow-x: hidden;
+    position: relative;
   }
+
+  /* ── DOT GRID BG ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
+  }
+
+  body > * { position: relative; z-index: 1; }
 
   ::selection {
     background: var(--accent);
@@ -43,41 +59,58 @@
     top: 0;
     width: 100%;
     z-index: 100;
-    padding: 1.2rem 2rem;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(250, 250, 248, 0.85);
+    background: rgba(244, 244, 240, 0.88);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
 
   .logo {
     font-family: var(--mono);
-    font-weight: 500;
-    font-size: 1.05rem;
+    font-weight: 700;
+    font-size: 1rem;
     color: var(--text);
-    letter-spacing: -0.02em;
   }
 
   .logo span { color: var(--accent); }
 
+  .logo .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent);
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+  }
+
   nav ul {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1.8rem;
   }
 
   nav a {
     color: var(--text-dim);
     text-decoration: none;
     font-family: var(--mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
     transition: color 0.3s;
   }
 
-  nav a:hover { color: var(--accent); }
+  nav a::before {
+    content: './';
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  nav a:hover { color: var(--text); }
+  nav a:hover::before { opacity: 1; }
 
   /* ── HERO ── */
   .hero {
@@ -92,42 +125,72 @@
 
   .hero-tag {
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--accent);
-    letter-spacing: 0.08em;
     margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.2s;
   }
 
+  .hero-tag::before {
+    content: '> ';
+    opacity: 0.5;
+  }
+
   .hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4.5rem);
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
     color: var(--text);
+    margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.4s;
   }
 
   .hero h1 .highlight {
     color: var(--accent);
+    font-family: var(--mono);
   }
 
   .hero-desc {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--text-dim);
-    max-width: 520px;
+    max-width: 540px;
     line-height: 1.8;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.6s;
   }
 
+  .hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.7s;
+  }
+
+  .role-chip {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .role-chip.active {
+    background: var(--accent-light);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
   .hero-cta {
     display: flex;
     gap: 1rem;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.8s;
   }
@@ -136,10 +199,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.6rem;
-    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
     font-family: var(--mono);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     text-decoration: none;
     transition: all 0.3s;
     cursor: pointer;
@@ -147,15 +210,15 @@
   }
 
   .btn-primary {
-    background: var(--accent);
-    color: #fff;
+    background: var(--text);
+    color: var(--bg);
     font-weight: 500;
   }
 
   .btn-primary:hover {
-    background: #0d5ecc;
+    background: var(--accent);
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(15, 111, 236, 0.2);
+    box-shadow: 0 4px 16px rgba(10, 143, 92, 0.15);
   }
 
   .btn-ghost {
@@ -178,101 +241,121 @@
 
   .section-label {
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--accent);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-label::before {
+    content: '// ';
+    opacity: 0.4;
   }
 
   .section-title {
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: 2.5rem;
     color: var(--text);
   }
 
+  .divider {
+    max-width: 900px;
+    margin: 0 auto;
+    border: none;
+    border-top: 1px dashed var(--border);
+  }
+
   /* ── PROJECTS ── */
   .project-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 2rem;
     transition: all 0.3s;
     position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
   }
 
   .project-card:hover {
     border-color: var(--accent-border);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
   }
+
+  .project-card:hover::before { opacity: 1; }
 
   .project-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
     margin-bottom: 1rem;
   }
 
   .project-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: var(--accent-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .project-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--text);
+    font-family: var(--mono);
   }
 
   .project-status {
     font-family: var(--mono);
-    font-size: 0.65rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     margin-left: auto;
-    background: rgba(22, 163, 74, 0.08);
-    color: #16a34a;
-    border: 1px solid rgba(22, 163, 74, 0.2);
+    background: rgba(10, 143, 92, 0.08);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
   }
 
   .project-card p {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--text-dim);
-    line-height: 1.7;
+    line-height: 1.75;
     margin-bottom: 1.2rem;
   }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.45rem;
     margin-bottom: 1.2rem;
   }
 
   .tag {
     font-family: var(--mono);
-    font-size: 0.7rem;
-    padding: 0.3rem 0.7rem;
-    border-radius: 5px;
-    background: var(--accent-light);
-    color: var(--accent);
-    border: 1px solid var(--accent-border);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    background: var(--bg);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
   }
 
   .project-link {
     font-family: var(--mono);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--accent);
     text-decoration: none;
     display: inline-flex;
@@ -287,17 +370,17 @@
   .ideas-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   .idea-item {
     display: flex;
     align-items: flex-start;
-    gap: 1.2rem;
-    padding: 1.4rem 1.6rem;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 8px;
     transition: all 0.3s;
   }
 
@@ -307,22 +390,24 @@
 
   .idea-num {
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--accent);
-    min-width: 28px;
-    padding-top: 0.15rem;
+    min-width: 24px;
+    padding-top: 0.2rem;
+    opacity: 0.6;
   }
 
   .idea-item h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
     color: var(--text);
   }
 
   .idea-item p {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--text-dim);
+    line-height: 1.6;
   }
 
   /* ── ABOUT ── */
@@ -335,9 +420,9 @@
 
   .about-text p {
     color: var(--text-dim);
-    font-size: 1rem;
-    margin-bottom: 1.2rem;
-    line-height: 1.9;
+    font-size: 0.95rem;
+    margin-bottom: 1.1rem;
+    line-height: 1.85;
   }
 
   .about-text p strong {
@@ -347,27 +432,27 @@
   .about-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   .stat-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.4rem;
+    border-radius: 8px;
+    padding: 1.2rem;
     text-align: center;
+    font-family: var(--mono);
   }
 
   .stat-card .num {
-    font-family: var(--mono);
-    font-size: 1.6rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--accent);
     display: block;
   }
 
   .stat-card .label {
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     color: var(--text-dim);
     margin-top: 0.3rem;
     display: block;
@@ -377,58 +462,67 @@
   .links-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   .link-card {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.9rem 1.4rem;
+    gap: 0.6rem;
+    padding: 0.8rem 1.2rem;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 6px;
     text-decoration: none;
     color: var(--text);
     font-family: var(--mono);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: all 0.3s;
   }
 
   .link-card:hover {
     border-color: var(--accent);
     color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   }
 
   .link-card svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
   }
 
-  /* ── DIVIDER ── */
-  .divider {
-    max-width: 900px;
-    margin: 0 auto;
-    border: none;
-    border-top: 1px solid var(--border);
+  /* ── TERMINAL BLOCK ── */
+  .terminal-block {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: #1a1a1a;
+    color: #d4d4d4;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 2rem;
+    line-height: 1.8;
+    overflow-x: auto;
   }
+
+  .terminal-block .prompt { color: var(--accent); }
+  .terminal-block .comment { color: #666; }
+  .terminal-block .string { color: #ce9178; }
 
   /* ── FOOTER ── */
   footer {
     max-width: 900px;
     margin: 0 auto;
     padding: 2.5rem 3rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px dashed var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--text-dim);
   }
 
@@ -442,24 +536,28 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #16a34a;
+    background: var(--accent);
     animation: pulse 2s ease-in-out infinite;
   }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
   }
 
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    50% { opacity: 0.3; }
   }
 
   .fade-in {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
@@ -471,12 +569,13 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
-    nav ul { gap: 1rem; }
-    nav a { font-size: 0.7rem; }
+    nav ul { gap: 1.2rem; }
+    nav a { font-size: 0.68rem; }
     section { padding: 3.5rem 1.5rem; }
     .hero { padding: 7rem 1.5rem 3rem; }
     .about-content { grid-template-columns: 1fr; }
     .hero-cta { flex-direction: column; }
+    .hero-roles { gap: 0.4rem; }
   }
 </style>
 </head>
@@ -484,23 +583,30 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">gautamdn<span>.</span></div>
+  <div class="logo">gautamdn<span>.</span><span class="cursor"></span></div>
   <ul>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#ideas">Ideas</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#ideas">ideas</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#contact">contact</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <header class="hero">
-  <div class="hero-tag">engineering · building · quizzing</div>
+  <div class="hero-tag">whoami</div>
   <h1>Hey, I'm <span class="highlight">gautamdn</span></h1>
-  <p class="hero-desc">Engineering Manager at Qualtrics. AI hackathon winner. Quiz enthusiast. Dad of 2. I build things, explore ideas, and ship side projects.</p>
+  <p class="hero-desc">Engineering Manager at Qualtrics. I build side projects, win AI hackathons, host quizzes, and try to keep up with two kids.</p>
+  <div class="hero-roles">
+    <span class="role-chip active">eng_manager</span>
+    <span class="role-chip active">hackathon_winner</span>
+    <span class="role-chip">dad_of_2</span>
+    <span class="role-chip active">quiz_enthusiast</span>
+    <span class="role-chip">builder</span>
+  </div>
   <div class="hero-cta">
-    <a href="#projects" class="btn btn-primary">View Projects &darr;</a>
-    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    <a href="#projects" class="btn btn-primary">ls ./projects</a>
+    <a href="#contact" class="btn btn-ghost">ping me</a>
   </div>
 </header>
 
@@ -508,23 +614,29 @@
 
 <!-- PROJECTS -->
 <section id="projects">
-  <div class="section-label">Projects</div>
-  <h2 class="section-title">Things I've Built</h2>
+  <div class="section-label">projects</div>
+  <h2 class="section-title">Things I've Shipped</h2>
 
   <div class="project-card fade-in">
     <div class="project-header">
-      <div class="project-icon">🕉</div>
+      <span class="project-icon">🕉</span>
       <h3>GitaFlow</h3>
-      <span class="project-status">Live</span>
+      <span class="project-status">deployed</span>
     </div>
     <p>A self-paced Bhagavad Gita study app — 700 shlokas across 239 daily readings with audio chanting, AI-powered Sanskrit pronunciation feedback, and streak tracking.</p>
     <div class="project-tags">
-      <span class="tag">React Native</span>
-      <span class="tag">Expo</span>
-      <span class="tag">TypeScript</span>
-      <span class="tag">Whisper API</span>
+      <span class="tag">react-native</span>
+      <span class="tag">expo</span>
+      <span class="tag">typescript</span>
+      <span class="tag">whisper-api</span>
     </div>
-    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-link">View on GitHub &rarr;</a>
+    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-link">github.com/gautamdn/gitaflow &rarr;</a>
+  </div>
+
+  <div class="terminal-block fade-in">
+    <span class="comment"># more projects incoming...</span><br>
+    <span class="prompt">$</span> ls ./side-projects<br>
+    <span class="string">gitaflow/</span>&nbsp;&nbsp;<span class="comment">???/</span>&nbsp;&nbsp;<span class="comment">???/</span>
   </div>
 </section>
 
@@ -532,7 +644,7 @@
 
 <!-- IDEAS -->
 <section id="ideas">
-  <div class="section-label">Ideas & Notes</div>
+  <div class="section-label">ideas</div>
   <h2 class="section-title">What I'm Thinking About</h2>
   <div class="ideas-list">
     <div class="idea-item fade-in">
@@ -563,7 +675,7 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">About</div>
+  <div class="section-label">about</div>
   <h2 class="section-title">A Bit About Me</h2>
   <div class="about-content">
     <div class="about-text fade-in">
@@ -586,7 +698,7 @@
       </div>
       <div class="stat-card">
         <span class="num">🧠</span>
-        <span class="label">Quiz Champion</span>
+        <span class="label">Quiz Champ</span>
       </div>
     </div>
   </div>
@@ -596,22 +708,22 @@
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="section-label">Contact</div>
+  <div class="section-label">contact</div>
   <h2 class="section-title">Let's Connect</h2>
   <div class="links-row">
     <a href="https://github.com/gautamdn" target="_blank" class="link-card">
       <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
       GitHub
     </a>
-    <a href="#" class="link-card">
+    <a href="https://www.linkedin.com/in/gautamdn/" target="_blank" class="link-card">
       <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
       LinkedIn
     </a>
-    <a href="#" class="link-card">
+    <a href="https://x.com/goatzillaz" target="_blank" class="link-card">
       <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-      Twitter / X
+      X / Twitter
     </a>
-    <a href="mailto:you@example.com" class="link-card">
+    <a href="mailto:gautamdn@outlook.com" class="link-card">
       <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Email
     </a>
@@ -623,7 +735,7 @@
   <span>&copy; 2026 gautamdn</span>
   <div class="footer-pulse">
     <div class="pulse-dot"></div>
-    <span>always building</span>
+    <span>always shipping</span>
   </div>
 </footer>
 
@@ -631,7 +743,7 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
         observer.unobserve(entry.target);
       }
     });
