@@ -596,11 +596,11 @@
 <header class="hero">
   <div class="hero-tag">whoami</div>
   <h1>Hey, I'm <span class="highlight">gautamdn</span></h1>
-  <p class="hero-desc">Engineering Manager at Qualtrics. I build side projects, win AI hackathons, host quizzes, and try to keep up with two kids.</p>
+  <p class="hero-desc">Engineering Manager at Qualtrics. CMU alum. Amazon &amp; Microsoft veteran. 2 patents. I build side projects, host quizzes, and try to keep up with two kids.</p>
   <div class="hero-roles">
     <span class="role-chip active">eng_manager</span>
-    <span class="role-chip active">hackathon_winner</span>
-    <span class="role-chip">dad_of_2</span>
+    <span class="role-chip active">cmu_alum</span>
+    <span class="role-chip">2x_patents</span>
     <span class="role-chip active">quiz_enthusiast</span>
     <span class="role-chip">builder</span>
   </div>
@@ -617,7 +617,7 @@
   <div class="section-label">projects</div>
   <h2 class="section-title">Things I've Shipped</h2>
 
-  <div class="project-card fade-in">
+  <div class="project-card">
     <div class="project-header">
       <span class="project-icon">🕉</span>
       <h3>GitaFlow</h3>
@@ -633,25 +633,84 @@
     <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-link">github.com/gautamdn/gitaflow &rarr;</a>
   </div>
 
-  <div class="project-card fade-in">
+  <div class="project-card" style="margin-top:1.2rem;">
     <div class="project-header">
-      <span class="project-icon">🗣</span>
+      <span class="project-icon">📖</span>
+      <h3>Katha</h3>
+      <span class="project-status">deployed</span>
+    </div>
+    <p>A voice-first family legacy app where grandparents and elders record stories, memories, and wisdom — preserved as time capsules for children to unlock as they grow.</p>
+    <div class="project-tags">
+      <span class="tag">react-native</span>
+      <span class="tag">expo</span>
+      <span class="tag">supabase</span>
+      <span class="tag">claude-api</span>
+      <span class="tag">whisper</span>
+    </div>
+    <a href="https://github.com/gautamdn/katha" target="_blank" class="project-link">github.com/gautamdn/katha &rarr;</a>
+  </div>
+
+  <div class="project-card" style="margin-top:1.2rem;">
+    <div class="project-header">
+      <span class="project-icon">🗣️</span>
       <h3>Learn Indian Languages</h3>
       <span class="project-status">deployed</span>
     </div>
-    <p>An interactive web app to help users learn Indian languages through a clean, modern interface optimized for all devices.</p>
+    <p>An interactive web app for learning Indian languages — pick a language and start building vocabulary and comprehension at your own pace.</p>
     <div class="project-tags">
-      <span class="tag">web</span>
-      <span class="tag">languages</span>
-      <span class="tag">education</span>
+      <span class="tag">javascript</span>
+      <span class="tag">web-app</span>
     </div>
     <a href="https://learn-indian-languages.netlify.app/" target="_blank" class="project-link">learn-indian-languages.netlify.app &rarr;</a>
   </div>
 
-  <div class="terminal-block fade-in">
-    <span class="comment"># more projects incoming...</span><br>
-    <span class="prompt">$</span> ls ./side-projects<br>
-    <span class="string">gitaflow/</span>&nbsp;&nbsp;<span class="string">learn-indian-languages/</span>&nbsp;&nbsp;<span class="comment">???/</span>
+  <div class="project-card" style="margin-top:1.2rem;">
+    <div class="project-header">
+      <span class="project-icon">🧘</span>
+      <h3>Mann Shanthi</h3>
+      <span class="project-status" style="background:rgba(234,179,8,0.08);color:#ca8a04;border-color:rgba(234,179,8,0.2);">wip</span>
+    </div>
+    <p>A mindfulness and mental wellness app — bringing peace of mind through guided practices and personal reflection.</p>
+    <div class="project-tags">
+      <span class="tag">typescript</span>
+      <span class="tag">react-native</span>
+    </div>
+    <a href="https://github.com/gautamdn/mann-shanthi" target="_blank" class="project-link">github.com/gautamdn/mann-shanthi &rarr;</a>
+  </div>
+
+  <div class="project-card" style="margin-top:1.2rem;">
+    <div class="project-header">
+      <span class="project-icon">🎰</span>
+      <h3>Gambling AI</h3>
+      <span class="project-status" style="background:rgba(234,179,8,0.08);color:#ca8a04;border-color:rgba(234,179,8,0.2);">wip</span>
+    </div>
+    <p>An AI-powered gambling co-pilot with a betting dashboard — analyzes odds and surfaces insights to make smarter wagers.</p>
+    <div class="project-tags">
+      <span class="tag">javascript</span>
+      <span class="tag">html</span>
+      <span class="tag">css</span>
+    </div>
+    <a href="https://github.com/gautamdn/gambling-ai" target="_blank" class="project-link">github.com/gautamdn/gambling-ai &rarr;</a>
+  </div>
+
+  <div class="project-card" style="margin-top:1.2rem;">
+    <div class="project-header">
+      <span class="project-icon">❓</span>
+      <h3>Jeopardy Tracker</h3>
+      <span class="project-status">deployed</span>
+    </div>
+    <p>A Jeopardy-style quiz score tracker — track players, categories, and scores in real time during quiz nights.</p>
+    <div class="project-tags">
+      <span class="tag">next.js</span>
+      <span class="tag">typescript</span>
+      <span class="tag">tailwind</span>
+    </div>
+    <a href="https://jeopardy-tracker.vercel.app" target="_blank" class="project-link">jeopardy-tracker.vercel.app &rarr;</a>
+  </div>
+
+  <div class="terminal-block">
+    <span class="prompt">$</span> ls ./projects<br>
+    <span class="string">gitaflow/</span>&nbsp;&nbsp;<span class="string">katha/</span>&nbsp;&nbsp;<span class="string">learn-indian-languages/</span>&nbsp;&nbsp;<span class="string">mann-shanthi/</span>&nbsp;&nbsp;<span class="string">gambling-ai/</span>&nbsp;&nbsp;<span class="string">jeopardy-tracker/</span>
   </div>
 </section>
 
@@ -662,25 +721,11 @@
   <div class="section-label">ideas</div>
   <h2 class="section-title">What I'm Thinking About</h2>
   <div class="ideas-list">
-    <div class="idea-item fade-in">
+    <div class="idea-item">
       <span class="idea-num">01</span>
       <div>
-        <h3>Idea Title Goes Here</h3>
-        <p>A short note on something you're exploring, a question you're thinking about, or a half-baked concept worth sharing.</p>
-      </div>
-    </div>
-    <div class="idea-item fade-in">
-      <span class="idea-num">02</span>
-      <div>
-        <h3>Another Thought</h3>
-        <p>These can be rough — the whole point is to share thinking in progress, not polished essays.</p>
-      </div>
-    </div>
-    <div class="idea-item fade-in">
-      <span class="idea-num">03</span>
-      <div>
-        <h3>Something I'm Researching</h3>
-        <p>A topic, paper, or rabbit hole you're currently going down. Link out to resources if you want.</p>
+        <h3>AI & My Kids' Education</h3>
+        <p>How will AI reshape what my kids need to learn? What skills matter most when AI can code, write, and reason? Thinking through AI literacy for young children — not just using tools, but understanding how to think alongside them.</p>
       </div>
     </div>
   </div>
@@ -693,23 +738,23 @@
   <div class="section-label">about</div>
   <h2 class="section-title">A Bit About Me</h2>
   <div class="about-content">
-    <div class="about-text fade-in">
-      <p>I'm <strong>gautamdn</strong> — an Engineering Manager at <strong>Qualtrics</strong> by day, and a builder of side projects by night. I've won multiple <strong>AI hackathons</strong> and love pushing the boundaries of what's possible with new tech.</p>
-      <p>Outside of code, I'm an avid <strong>quizzing enthusiast</strong> — I've won multiple quizzes and regularly host them too. When I'm not doing any of that, I'm busy being dad to two amazing kids.</p>
-      <p>This site is a living portfolio — a place to collect my work, share rough ideas, and keep building in public.</p>
+    <div class="about-text">
+      <p>I'm <strong>gautamdn</strong> — an Engineering Manager at <strong>Qualtrics</strong>, where I lead Customer Care AI. Before that, I built ad systems at <strong>Microsoft</strong> and shipped keyword recommendation services at <strong>Amazon</strong>. I hold an M.S. from <strong>Carnegie Mellon University</strong>.</p>
+      <p>I've got <strong>2 granted patents</strong>, won multiple <strong>AI hackathons</strong>, and love building side projects that explore new tech. Outside of work, I'm an avid <strong>quizzing enthusiast</strong> — I've won multiple quizzes and regularly host them too.</p>
+      <p>When I'm not doing any of that, I'm busy being dad to two amazing kids. This site is a living portfolio — a place to collect my work, share rough ideas, and keep building in public.</p>
     </div>
-    <div class="about-stats fade-in">
+    <div class="about-stats">
       <div class="stat-card">
-        <span class="num">EM</span>
-        <span class="label">@ Qualtrics</span>
-      </div>
-      <div class="stat-card">
-        <span class="num">🏆</span>
-        <span class="label">Hackathon Wins</span>
+        <span class="num">CMU</span>
+        <span class="label">M.S. CS</span>
       </div>
       <div class="stat-card">
         <span class="num">2</span>
-        <span class="label">Kids</span>
+        <span class="label">Patents</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">12+</span>
+        <span class="label">Years in Tech</span>
       </div>
       <div class="stat-card">
         <span class="num">🧠</span>
@@ -738,7 +783,7 @@
       <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
       X / Twitter
     </a>
-    <a href="mailto:gautamdn@outlook.com" class="link-card">
+    <a href="/cdn-cgi/l/email-protection#ec8b8d99988d818882ac83999880838387c28f8381" class="link-card">
       <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Email
     </a>
@@ -754,18 +799,9 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
         setTimeout(() => entry.target.classList.add('visible'), i * 100);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
-
-</body>
-</html>
+        observer.unobserve(entry.target
