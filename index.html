@@ -9,24 +9,25 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #f4f4f0;
-    --surface: #ffffff;
-    --surface-hover: #fafaf7;
-    --border: #d8d8d0;
-    --text: #111111;
-    --text-dim: #555555;
-    --accent: #0a8f5c;
-    --accent-light: rgba(10, 143, 92, 0.06);
-    --accent-border: rgba(10, 143, 92, 0.2);
+    --bg: #0d1117;
+    --surface: rgba(255, 255, 255, 0.03);
+    --surface-hover: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --accent: #63b3ed;
+    --accent-light: rgba(99, 179, 237, 0.12);
+    --accent-border: rgba(99, 179, 237, 0.25);
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Space Grotesk', sans-serif;
-    --grid-color: rgba(0, 0, 0, 0.04);
+    --grid-color: rgba(99, 179, 237, 0.07);
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 30%, #1a1a2e 60%, #16213e 100%);
+    background-attachment: fixed;
     color: var(--text);
     font-family: var(--sans);
     line-height: 1.7;
@@ -41,7 +42,7 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
     background-size: 24px 24px;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
   }
@@ -63,7 +64,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(244, 244, 240, 0.88);
+    background: rgba(13, 17, 23, 0.85);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
@@ -114,11 +115,11 @@
 
   /* ── HERO ── */
   .hero {
-    min-height: 100vh;
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 8rem 3rem 4rem;
+    padding: 6rem 3rem 3rem;
     max-width: 900px;
     margin: 0 auto;
   }
@@ -218,7 +219,7 @@
   .btn-primary:hover {
     background: var(--accent);
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(10, 143, 92, 0.15);
+    box-shadow: 0 4px 16px rgba(99, 179, 237, 0.2);
   }
 
   .btn-ghost {
@@ -293,7 +294,7 @@
   .project-card:hover {
     border-color: var(--accent-border);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
   }
 
   .project-card:hover::before { opacity: 1; }
@@ -320,13 +321,131 @@
     font-family: var(--mono);
     font-size: 0.6rem;
     padding: 0.2rem 0.55rem;
-    border-radius: 3px;
-    text-transform: uppercase;
+    border-radius: 10px;
+    text-transform: lowercase;
     letter-spacing: 0.05em;
     margin-left: auto;
-    background: rgba(10, 143, 92, 0.08);
+  }
+
+  .project-status.deployed {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .project-status.live {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .project-status.review {
+    background: var(--accent-light);
     color: var(--accent);
     border: 1px solid var(--accent-border);
+  }
+
+  .project-status.wip {
+    background: rgba(234, 179, 8, 0.08);
+    color: #ca8a04;
+    border: 1px solid rgba(234, 179, 8, 0.2);
+  }
+
+  /* ── FEATURED PROJECT ── */
+  .featured-card {
+    background: var(--surface);
+    border: 1px solid var(--accent-border);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .featured-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .featured-screenshot {
+    flex-shrink: 0;
+    width: 220px;
+    height: 150px;
+    background: linear-gradient(135deg, rgba(99,179,237,0.08), rgba(99,179,237,0.03));
+    border: 1px solid rgba(99,179,237,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .featured-screenshot .icon { font-size: 2rem; }
+  .featured-screenshot .placeholder {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-top: 0.3rem;
+  }
+
+  .featured-content { flex: 1; }
+
+  .featured-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    font-family: var(--mono);
+  }
+
+  /* ── PROJECT GRID ── */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  .project-grid .project-card {
+    margin-top: 0;
+    padding: 1.4rem;
+  }
+
+  .project-grid .project-card h3 {
+    font-size: 1rem;
+  }
+
+  .project-grid .project-card p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-thumb {
+    width: 100%;
+    height: 140px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+  }
+
+  .project-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .project-card p {
@@ -348,9 +467,9 @@
     font-size: 0.65rem;
     padding: 0.25rem 0.6rem;
     border-radius: 3px;
-    background: var(--bg);
+    background: rgba(255, 255, 255, 0.06);
     color: var(--text-dim);
-    border: 1px solid var(--border);
+    border: none;
   }
 
   .project-link {
@@ -484,7 +603,7 @@
     border-color: var(--accent);
     color: var(--accent);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
 
   .link-card svg {
@@ -499,7 +618,8 @@
   .terminal-block {
     font-family: var(--mono);
     font-size: 0.75rem;
-    background: #1a1a1a;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
     color: #d4d4d4;
     border-radius: 8px;
     padding: 1.2rem 1.5rem;
@@ -572,10 +692,13 @@
     nav ul { gap: 1.2rem; }
     nav a { font-size: 0.68rem; }
     section { padding: 3.5rem 1.5rem; }
-    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero { padding: 5rem 1.5rem 2rem; }
     .about-content { grid-template-columns: 1fr; }
     .hero-cta { flex-direction: column; }
     .hero-roles { gap: 0.4rem; }
+    .featured-card { flex-direction: column; }
+    .featured-screenshot { width: 100%; height: 120px; }
+    .project-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -595,7 +718,8 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-tag">whoami</div>
-  <h1>Hey, I'm <span class="highlight">gautamdn</span></h1>
+  <h1>Hey, I'm <span class="highlight">Gautam Dambekodi</span></h1>
+  <p style="font-family:var(--mono);font-size:0.85rem;color:var(--text-dim);margin-bottom:0.5rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.5s;">a.k.a. <span style="color:var(--accent);">gautamdn</span></p>
   <p class="hero-desc">Engineering Manager at Qualtrics. CMU alum. Amazon &amp; Microsoft veteran. 2 patents. I build side projects, host quizzes, and try to keep up with two kids.</p>
   <div class="hero-roles">
     <span class="role-chip active">eng_manager</span>
@@ -617,100 +741,113 @@
   <div class="section-label">projects</div>
   <h2 class="section-title">Things I've Shipped</h2>
 
-  <div class="project-card">
-    <div class="project-header">
-      <span class="project-icon">🕉</span>
-      <h3>GitaFlow</h3>
-      <span class="project-status">deployed</span>
+  <!-- FEATURED: GitaFlow -->
+  <div class="featured-card">
+    <div class="featured-screenshot">
+      <img src="assets/gitaflow/0x0ss.png" alt="GitaFlow app screenshot" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
     </div>
-    <p>A self-paced Bhagavad Gita study app — 700 shlokas across 239 daily readings with audio chanting, AI-powered Sanskrit pronunciation feedback, and streak tracking.</p>
-    <div class="project-tags">
-      <span class="tag">react-native</span>
-      <span class="tag">expo</span>
-      <span class="tag">typescript</span>
-      <span class="tag">whisper-api</span>
+    <div class="featured-content">
+      <div class="project-header">
+        <h3>GitaFlow</h3>
+        <span class="project-status review">in app store review</span>
+      </div>
+      <p>A self-paced Bhagavad Gita study app — 700 shlokas across 239 daily readings with audio chanting, AI-powered Sanskrit pronunciation feedback, and streak tracking.</p>
+      <div class="project-tags">
+        <span class="tag">react-native</span>
+        <span class="tag">expo</span>
+        <span class="tag">typescript</span>
+        <span class="tag">whisper-api</span>
+      </div>
+      <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-link">github.com/gautamdn/gitaflow &rarr;</a>
     </div>
-    <a href="https://github.com/gautamdn/gitaflow" target="_blank" class="project-link">github.com/gautamdn/gitaflow &rarr;</a>
   </div>
 
-  <div class="project-card" style="margin-top:1.2rem;">
-    <div class="project-header">
-      <span class="project-icon">📖</span>
-      <h3>Katha</h3>
-      <span class="project-status">deployed</span>
+  <!-- GRID: Remaining projects -->
+  <div class="project-grid">
+    <div class="project-card">
+      <div class="project-thumb">
+        <img src="assets/jeopardy-whiz/Screen Shot 2026-04-05 at 9.59.26 AM.png" alt="Jeopardy Prep screenshot">
+      </div>
+      <div class="project-header">
+        <span class="project-icon">🧠</span>
+        <h3>Jeopardy Prep</h3>
+        <span class="project-status live">live</span>
+      </div>
+      <p>A lovable Jeopardy preparation app — practice clues, track your progress, and sharpen your trivia game.</p>
+      <div class="project-tags">
+        <span class="tag">lovable</span>
+      </div>
+      <a href="https://jeopardy-whiz.lovable.app/" target="_blank" class="project-link">jeopardy-whiz.lovable.app &rarr;</a>
     </div>
-    <p>A voice-first family legacy app where grandparents and elders record stories, memories, and wisdom — preserved as time capsules for children to unlock as they grow.</p>
-    <div class="project-tags">
-      <span class="tag">react-native</span>
-      <span class="tag">expo</span>
-      <span class="tag">supabase</span>
-      <span class="tag">claude-api</span>
-      <span class="tag">whisper</span>
-    </div>
-    <a href="https://github.com/gautamdn/katha" target="_blank" class="project-link">github.com/gautamdn/katha &rarr;</a>
-  </div>
 
-  <div class="project-card" style="margin-top:1.2rem;">
-    <div class="project-header">
-      <span class="project-icon">🗣️</span>
-      <h3>Learn Indian Languages</h3>
-      <span class="project-status">deployed</span>
+    <div class="project-card">
+      <div class="project-header">
+        <span class="project-icon">📖</span>
+        <h3>Katha</h3>
+        <span class="project-status deployed">deployed</span>
+      </div>
+      <p>A voice-first family legacy app where grandparents record stories and wisdom — preserved as time capsules for children.</p>
+      <div class="project-tags">
+        <span class="tag">react-native</span>
+        <span class="tag">supabase</span>
+        <span class="tag">claude-api</span>
+      </div>
+      <a href="https://github.com/gautamdn/katha" target="_blank" class="project-link">github &rarr;</a>
     </div>
-    <p>An interactive web app for learning Indian languages — pick a language and start building vocabulary and comprehension at your own pace.</p>
-    <div class="project-tags">
-      <span class="tag">javascript</span>
-      <span class="tag">web-app</span>
-    </div>
-    <a href="https://learn-indian-languages.netlify.app/" target="_blank" class="project-link">learn-indian-languages.netlify.app &rarr;</a>
-  </div>
 
-  <div class="project-card" style="margin-top:1.2rem;">
-    <div class="project-header">
-      <span class="project-icon">🧘</span>
-      <h3>Mann Shanthi</h3>
-      <span class="project-status" style="background:rgba(234,179,8,0.08);color:#ca8a04;border-color:rgba(234,179,8,0.2);">wip</span>
+    <div class="project-card">
+      <div class="project-thumb">
+        <img src="assets/learn-indian-languages/Screen Shot 2026-04-05 at 10.00.11 AM.png" alt="Learn Indian Languages screenshot">
+      </div>
+      <div class="project-header">
+        <span class="project-icon">🗣️</span>
+        <h3>Learn Indian Languages</h3>
+        <span class="project-status live">live</span>
+      </div>
+      <p>An interactive web app for learning Indian languages — pick a language and build vocabulary at your own pace.</p>
+      <div class="project-tags">
+        <span class="tag">javascript</span>
+        <span class="tag">web-app</span>
+      </div>
+      <a href="https://learn-indian-languages.netlify.app/" target="_blank" class="project-link">learn-indian-languages.netlify.app &rarr;</a>
     </div>
-    <p>A mindfulness and mental wellness app — bringing peace of mind through guided practices and personal reflection.</p>
-    <div class="project-tags">
-      <span class="tag">typescript</span>
-      <span class="tag">react-native</span>
-    </div>
-    <a href="https://github.com/gautamdn/mann-shanthi" target="_blank" class="project-link">github.com/gautamdn/mann-shanthi &rarr;</a>
-  </div>
 
-  <div class="project-card" style="margin-top:1.2rem;">
-    <div class="project-header">
-      <span class="project-icon">🎰</span>
-      <h3>Gambling AI</h3>
-      <span class="project-status" style="background:rgba(234,179,8,0.08);color:#ca8a04;border-color:rgba(234,179,8,0.2);">wip</span>
+    <div class="project-card">
+      <div class="project-thumb">
+        <img src="assets/antara/Screen Shot 2026-04-05 at 9.57.20 AM.png" alt="Antara app screenshot">
+      </div>
+      <div class="project-header">
+        <span class="project-icon">🧘</span>
+        <h3>Antara</h3>
+        <span class="project-status wip">wip</span>
+      </div>
+      <p>A mindfulness and mental wellness app — guided practices and personal reflection for peace of mind.</p>
+      <div class="project-tags">
+        <span class="tag">typescript</span>
+        <span class="tag">react-native</span>
+      </div>
+      <a href="https://github.com/gautamdn/mann-shanthi" target="_blank" class="project-link">github &rarr;</a>
     </div>
-    <p>An AI-powered gambling co-pilot with a betting dashboard — analyzes odds and surfaces insights to make smarter wagers.</p>
-    <div class="project-tags">
-      <span class="tag">javascript</span>
-      <span class="tag">html</span>
-      <span class="tag">css</span>
-    </div>
-    <a href="https://github.com/gautamdn/gambling-ai" target="_blank" class="project-link">github.com/gautamdn/gambling-ai &rarr;</a>
-  </div>
 
-  <div class="project-card" style="margin-top:1.2rem;">
-    <div class="project-header">
-      <span class="project-icon">❓</span>
-      <h3>Jeopardy Tracker</h3>
-      <span class="project-status">deployed</span>
+    <div class="project-card">
+      <div class="project-header">
+        <span class="project-icon">🎰</span>
+        <h3>Gambling AI</h3>
+        <span class="project-status wip">wip</span>
+      </div>
+      <p>An AI-powered gambling co-pilot — analyzes odds and surfaces insights to make smarter wagers.</p>
+      <div class="project-tags">
+        <span class="tag">javascript</span>
+        <span class="tag">html</span>
+        <span class="tag">css</span>
+      </div>
+      <a href="https://github.com/gautamdn/gambling-ai" target="_blank" class="project-link">github &rarr;</a>
     </div>
-    <p>A Jeopardy-style quiz score tracker — track players, categories, and scores in real time during quiz nights.</p>
-    <div class="project-tags">
-      <span class="tag">next.js</span>
-      <span class="tag">typescript</span>
-      <span class="tag">tailwind</span>
-    </div>
-    <a href="https://jeopardy-tracker.vercel.app" target="_blank" class="project-link">jeopardy-tracker.vercel.app &rarr;</a>
   </div>
 
   <div class="terminal-block">
     <span class="prompt">$</span> ls ./projects<br>
-    <span class="string">gitaflow/</span>&nbsp;&nbsp;<span class="string">katha/</span>&nbsp;&nbsp;<span class="string">learn-indian-languages/</span>&nbsp;&nbsp;<span class="string">mann-shanthi/</span>&nbsp;&nbsp;<span class="string">gambling-ai/</span>&nbsp;&nbsp;<span class="string">jeopardy-tracker/</span>
+    <span class="string">gitaflow/</span>&nbsp;&nbsp;<span class="string">jeopardy-whiz/</span>&nbsp;&nbsp;<span class="string">katha/</span>&nbsp;&nbsp;<span class="string">learn-indian-languages/</span>&nbsp;&nbsp;<span class="string">antara/</span>&nbsp;&nbsp;<span class="string">gambling-ai/</span>
   </div>
 </section>
 
@@ -729,6 +866,7 @@
       </div>
     </div>
   </div>
+  <p style="font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);text-align:center;margin-top:1.2rem;opacity:0.5;">// more ideas coming soon</p>
 </section>
 
 <hr class="divider">
@@ -739,7 +877,7 @@
   <h2 class="section-title">A Bit About Me</h2>
   <div class="about-content">
     <div class="about-text">
-      <p>I'm <strong>gautamdn</strong> — an Engineering Manager at <strong>Qualtrics</strong>, where I lead Customer Care AI. Before that, I built ad systems at <strong>Microsoft</strong> and shipped keyword recommendation services at <strong>Amazon</strong>. I hold an M.S. from <strong>Carnegie Mellon University</strong>.</p>
+      <p>I'm <strong>Gautam Dambekodi</strong> — an Engineering Manager at <strong>Qualtrics</strong>, where I lead Customer Care AI. Before that, I built ad systems at <strong>Microsoft</strong> and shipped keyword recommendation services at <strong>Amazon</strong>. I hold an M.S. from <strong>Carnegie Mellon University</strong>.</p>
       <p>I've got <strong>2 granted patents</strong>, won multiple <strong>AI hackathons</strong>, and love building side projects that explore new tech. Outside of work, I'm an avid <strong>quizzing enthusiast</strong> — I've won multiple quizzes and regularly host them too.</p>
       <p>When I'm not doing any of that, I'm busy being dad to two amazing kids. This site is a living portfolio — a place to collect my work, share rough ideas, and keep building in public.</p>
     </div>
@@ -792,7 +930,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <span>&copy; 2026 gautamdn</span>
+  <span style="color:#4a5568;">&copy; 2026 gautamdn</span>
   <div class="footer-pulse">
     <div class="pulse-dot"></div>
     <span>always shipping</span>
